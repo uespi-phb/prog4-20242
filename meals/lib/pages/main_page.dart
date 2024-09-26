@@ -1,40 +1,51 @@
 import 'package:flutter/material.dart';
 
-import '../models/categories.dart';
-import '../widgets/category_card.dart';
+import '../widgets/categories_widget.dart';
+import '../widgets/favorites_widget.dart';
 
-class CategoriesPage extends StatelessWidget {
-  const CategoriesPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
-  Widget categoryBuilder(BuildContext context, int index) {
-    debugPrint('index: $index/${kCategories.length}');
-    return Padding(
-      padding: const EdgeInsets.all(25.0),
-      child: Text(kCategories[index].title),
-    );
-  }
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int tabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    // final categories = <Widget>[];
-
-    // for (var category in kCategories) {
-    //   categories.add(Text(category.title));
-    // }
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categorias',
-            style: TextStyle(
+        title: Text((tabIndex == 0) ? 'Categorias' : 'Favoritos',
+            style: const TextStyle(
               color: Colors.white,
             )),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: ListView.builder(
-        itemCount: kCategories.length,
-        itemBuilder: (_, index) => CategoryCard(kCategories[index]),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: tabIndex,
+        onTap: (index) {
+          setState(() {
+            tabIndex = index;
+          });
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        selectedItemColor: Colors.white,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categorias',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favoritos',
+          ),
+        ],
       ),
+      body:
+          (tabIndex == 0) ? const CategoriesWidget() : const FavoritesWidget(),
     );
   }
 }

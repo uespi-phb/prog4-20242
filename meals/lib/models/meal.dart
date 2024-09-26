@@ -1,12 +1,10 @@
 enum Complexity {
-  simple,
-  medium,
-  difficult;
+  simple('Simples'),
+  medium('Média'),
+  difficult('Alta');
 
-  String get string {
-    const names = ['Simples', 'Média', 'Alta'];
-    return names[index];
-  }
+  const Complexity(this.string);
+  final String string;
 }
 
 enum Cost {

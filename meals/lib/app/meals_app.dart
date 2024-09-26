@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meals/widgets/favorites_widget.dart';
 
+import '../pages/category_meals_page.dart';
 import '../pages/main_page.dart';
 
 class MealsApp extends StatelessWidget {
@@ -22,7 +24,13 @@ class MealsApp extends StatelessWidget {
               ),
             ),
       ),
-      home: const CategoriesPage(),
+      // home: const MainPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MainPage(),
+        '/favorites': (context) => const FavoritesWidget(),
+        '/categoryMeals': (context) => const CategoryMealsPage(),
+      },
     );
   }
 }

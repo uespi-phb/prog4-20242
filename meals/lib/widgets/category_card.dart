@@ -11,7 +11,9 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.green,
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed('/categoryMeals');
+      },
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(8.0),
       child: Container(
