@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/app/routes.dart';
 
 import '../models/category.dart';
 
@@ -11,9 +12,10 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.green,
-      onTap: () {
-        Navigator.of(context).pushNamed('/categoryMeals');
-      },
+      onTap: () => Navigator.of(context).pushNamed(
+        Routes.categoryMeals,
+        arguments: category,
+      ),
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(8.0),
       child: Container(

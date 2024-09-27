@@ -17,10 +17,9 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text((tabIndex == 0) ? 'Categorias' : 'Favoritos',
-            style: const TextStyle(
-              color: Colors.white,
-            )),
+        title: Text(
+          (tabIndex == 0) ? 'Categorias' : 'Favoritos',
+        ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
       ),
