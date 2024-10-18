@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../models/categories.dart';
+import '../providers/meals_provider.dart';
 import 'category_card.dart';
 
 class CategoriesWidget extends StatelessWidget {
@@ -10,10 +11,11 @@ class CategoriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListView.builder(
-    //   itemCount: kCategories.length,
-    //   itemBuilder: (_, index) => CategoryCard(kCategories[index]),
-    // );
+    final provider = Provider.of<MealsProvider>(
+      context,
+      listen: false,
+    );
+    final categories = provider.categories;
 
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -22,7 +24,7 @@ class CategoriesWidget extends StatelessWidget {
         mainAxisSpacing: 20.0,
         crossAxisSpacing: 20.0,
         childAspectRatio: 3 / 2,
-        children: kCategories
+        children: categories
             .map(
               (category) => CategoryCard(category),
             )

@@ -1,6 +1,6 @@
 import '../models/meal.dart';
 
-final kMeals = <Meal>[
+final dataMeals = <Meal>[
   Meal(
     id: 1,
     categories: [1, 2],

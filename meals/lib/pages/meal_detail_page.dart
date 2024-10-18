@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meals/widgets/meal_prepare_info_widget.dart';
+import 'package:provider/provider.dart';
+
+import '../widgets/meal_prepare_info_widget.dart';
 
 import '../models/meal.dart';
+import '../providers/meals_provider.dart';
 
 class MealDetailPage extends StatelessWidget {
   final Meal meal;
@@ -13,17 +16,31 @@ class MealDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MealsProvider>(
+      context,
+      listen: false,
+    );
+
+    debugPrint('** meal: ${meal.title}');
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        // backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           meal.title,
         ),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.star),
+        onPressed: () {
+          debugPrint('favorite: ${meal.isFavorite}');
+          provider.toggleFavorite(meal);
+          debugPrint('favorite: ${meal.isFavorite}');
+        },
+        child: Consumer<MealsProvider>(
+          builder: (_, __, ___) =>
+              Icon(meal.isFavorite ? Icons.star : Icons.star_outline),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

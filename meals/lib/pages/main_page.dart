@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/app_drawer.dart';
 import '../widgets/categories_widget.dart';
 import '../widgets/favorites_widget.dart';
 
@@ -16,12 +17,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text(
           (tabIndex == 0) ? 'Categorias' : 'Favoritos',
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabIndex,
@@ -30,8 +31,6 @@ class _MainPageState extends State<MainPage> {
             tabIndex = index;
           });
         },
-        backgroundColor: Theme.of(context).primaryColor,
-        selectedItemColor: Colors.white,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.category),

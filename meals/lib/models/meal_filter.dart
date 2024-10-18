@@ -1,26 +1,23 @@
 enum MealFilter {
   glutenFree(
-    name: 'Sem Glúten',
-    description: 'Só exibe refeições sem glúten',
+    'Sem Glútem',
+    'Só exibe refeições sem glútem',
   ),
   lactoseFree(
-    name: 'Sem Lactose',
-    description: 'Só exibe refeições sem lactose',
-  ),
-  vegetarian(
-    name: 'Vegetariano',
-    description: 'Só exibe refeições vegetarianas',
+    'Sem Lactose',
+    'Só exibe refeições sem lactose',
   ),
   vegan(
-    name: 'Vegano',
-    description: 'Só exibe refeições veganas',
+    'Vegano',
+    'Só exibe refeições veganas',
+  ),
+  vegetarian(
+    'Vegetariano',
+    'Só exibe refeições vegetarianas',
   );
 
-  const MealFilter({
-    required this.name,
-    required this.description,
-  });
+  const MealFilter(this.text, this.description);
 
-  final String name;
+  final String text;
   final String description;
 }

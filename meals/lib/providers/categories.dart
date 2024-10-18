@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/category.dart';
 
-const kCategories = <Category>[
+const dataCategories = <Category>[
   Category(
     id: 1,
     title: 'Italiano',
