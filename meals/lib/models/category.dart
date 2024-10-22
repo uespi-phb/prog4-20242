@@ -10,4 +10,12 @@ class Category {
     required this.title,
     required this.color,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'color': color.value,
+    };
+  }
 }

@@ -48,4 +48,23 @@ class Meal {
     required this.isVegetarian,
     this.isFavorite = false,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'imageUrl': imageUrl,
+      'categories': categories,
+      'ingredients': ingredients,
+      'steps': steps,
+      'duration': duration,
+      'complexity': complexity.index,
+      'cost': cost.index,
+      'isGlutenFree': isGlutenFree,
+      'isLactoseFree': isLactoseFree,
+      'isVegan': isVegan,
+      'isVegetarian': isVegetarian,
+      'isFavorite': isFavorite,
+    };
+  }
 }
