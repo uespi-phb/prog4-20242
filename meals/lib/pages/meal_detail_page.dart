@@ -21,8 +21,6 @@ class MealDetailPage extends StatelessWidget {
       listen: false,
     );
 
-    debugPrint('** meal: ${meal.title}');
-
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Theme.of(context).primaryColor,
@@ -33,9 +31,7 @@ class MealDetailPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          debugPrint('favorite: ${meal.isFavorite}');
           provider.toggleFavorite(meal);
-          debugPrint('favorite: ${meal.isFavorite}');
         },
         child: Consumer<MealsProvider>(
           builder: (_, __, ___) =>

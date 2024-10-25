@@ -44,11 +44,11 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.save),
-            title: const Text('Exportar Dados'),
-            onTap: () {
+            title: const Text('Importar Dados'),
+            onTap: () async {
               final provider =
                   Provider.of<MealsProvider>(context, listen: false);
-              provider.exportMeals();
+              await provider.loadData();
             },
           ),
         ],

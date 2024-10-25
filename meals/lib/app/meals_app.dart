@@ -56,7 +56,6 @@ class _MealsAppState extends State<MealsApp> {
           Routes.settings: (_) => const SettingsPage(),
           Routes.categoryMeals: (context) {
             final argument = ModalRoute.of(context)?.settings.arguments;
-            debugPrint('category: $argument');
             if (argument != null) {
               category = argument as Category;
             }
@@ -64,7 +63,6 @@ class _MealsAppState extends State<MealsApp> {
           },
           Routes.mealDetail: (context) {
             final argument = ModalRoute.of(context)?.settings.arguments;
-            debugPrint('meal: $argument');
             return MealDetailPage(argument as Meal);
           }
         },

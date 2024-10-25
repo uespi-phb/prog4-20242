@@ -1,3 +1,5 @@
+import './category.dart';
+
 enum Complexity {
   simple('Simples'),
   medium('Média'),
@@ -17,10 +19,10 @@ enum Cost {
 }
 
 class Meal {
-  final int id;
+  final String id;
   final String title;
   final String imageUrl;
-  final List<int> categories;
+  final List<Category> categories;
   final List<String> ingredients;
   final List<String> steps;
   final int duration;
@@ -54,7 +56,7 @@ class Meal {
       'id': id,
       'title': title,
       'imageUrl': imageUrl,
-      'categories': categories,
+      'categories': categories.map((category) => category.id).toList(),
       'ingredients': ingredients,
       'steps': steps,
       'duration': duration,
@@ -66,5 +68,24 @@ class Meal {
       'isVegetarian': isVegetarian,
       'isFavorite': isFavorite,
     };
+  }
+
+  factory Meal.fromMap(Map<String, dynamic> data) {
+    return Meal(
+      id: data['id'] ?? '',
+      title: data['title'] ?? '',
+      complexity: Complexity.values[data['complexity'] ?? 0],
+      cost: Cost.values[data['cost'] ?? 0],
+      duration: data['duration'] ?? 0,
+      imageUrl: data['imageUrl'] ?? '',
+      isGlutenFree: data['isGlutenFree'] ?? false,
+      isLactoseFree: data['isLactoseFree'] ?? false,
+      isVegan: data['isVegan'] ?? false,
+      isVegetarian: data['isVegetarian'] ?? false,
+      isFavorite: data['isFavorite'] ?? false,
+      categories: List.from(data['categories'] ?? [], growable: false),
+      ingredients: List.from(data['ingredients'] ?? [], growable: false),
+      steps: List.from(data['steps'] ?? [], growable: false),
+    );
   }
 }

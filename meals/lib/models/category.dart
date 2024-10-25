@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class Category {
-  final int id;
+  final String id;
   final String title;
   final Color color;
 
@@ -13,9 +13,16 @@ class Category {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'title': title,
       'color': color.value,
     };
+  }
+
+  factory Category.fromMap(Map<String, dynamic> data) {
+    return Category(
+      id: data['id'],
+      title: data['title'],
+      color: Color(data['color']),
+    );
   }
 }
