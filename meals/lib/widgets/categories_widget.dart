@@ -11,11 +11,15 @@ class CategoriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('CategoriesWidget.build()');
+
     final provider = Provider.of<MealsProvider>(
       context,
       listen: false,
     );
     final categories = provider.categories;
+
+    debugPrint('CategoriesWidget.build(cats=${categories.length})');
 
     return Padding(
       padding: const EdgeInsets.all(20.0),

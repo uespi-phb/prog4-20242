@@ -11,18 +11,13 @@ import '../models/category.dart';
 import '../pages/category_meals_page.dart';
 import './routes.dart';
 
-class MealsApp extends StatefulWidget {
+class MealsApp extends StatelessWidget {
   const MealsApp({super.key});
 
   @override
-  State<MealsApp> createState() => _MealsAppState();
-}
-
-class _MealsAppState extends State<MealsApp> {
-  Category? category;
-
-  @override
   Widget build(BuildContext context) {
+    debugPrint('MealsApp.build()');
+
     return ChangeNotifierProvider<MealsProvider>(
       create: (_) => MealsProvider(),
       child: MaterialApp(
@@ -56,10 +51,9 @@ class _MealsAppState extends State<MealsApp> {
           Routes.settings: (_) => const SettingsPage(),
           Routes.categoryMeals: (context) {
             final argument = ModalRoute.of(context)?.settings.arguments;
-            if (argument != null) {
-              category = argument as Category;
-            }
-            return CategoryMealsPage(category!);
+            final category = argument as Category;
+
+            return CategoryMealsPage(category);
           },
           Routes.mealDetail: (context) {
             final argument = ModalRoute.of(context)?.settings.arguments;

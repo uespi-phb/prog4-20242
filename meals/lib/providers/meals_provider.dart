@@ -43,6 +43,7 @@ class MealsProvider with ChangeNotifier {
 
   void toggleFavorite(Meal meal) {
     meal.isFavorite = !meal.isFavorite;
+    _saveFavorite(meal);
     notifyListeners();
   }
 
@@ -52,8 +53,27 @@ class MealsProvider with ChangeNotifier {
   }
 
   Future<void> loadData() async {
+    debugPrint('MealsProvider.loadData() ${DateTime.now().toIso8601String()}');
+
     await _loadCategories();
     await _loadMeals();
+
+    // await Future.delayed(const Duration(seconds: 4));
+
+    debugPrint('MealsProvider.loadData() ${DateTime.now().toIso8601String()}');
+  }
+
+  Future<void> _saveFavorite(Meal meal) async {
+    final url = '$apiUrl/meals/${meal.id}';
+
+    final map = {
+      'isFavorite': meal.isFavorite,
+    };
+
+    await http.patch(
+      Uri.parse(url),
+      body: jsonEncode(map),
+    );
   }
 
   Future<void> _loadCategories() async {
@@ -84,6 +104,7 @@ class MealsProvider with ChangeNotifier {
       meals.add(Meal.fromMap(data));
     });
   }
+
   /*
   Future<void> _saveCategories() async {
     final url = '$apiUrl/categories.json';
