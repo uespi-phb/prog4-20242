@@ -16,8 +16,6 @@ class MealsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MealsApp.build()');
-
     return ChangeNotifierProvider<MealsProvider>(
       create: (_) => MealsProvider(),
       child: MaterialApp(

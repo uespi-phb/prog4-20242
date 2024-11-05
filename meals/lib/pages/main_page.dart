@@ -19,8 +19,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    debugPrint('MainPage.initState()');
-
     super.initState();
 
     setState(() {
@@ -30,7 +28,6 @@ class _MainPageState extends State<MainPage> {
     final provider = Provider.of<MealsProvider>(context, listen: false);
     final future = provider.loadData();
     future.then((result) {
-      debugPrint('future.done()');
       setState(() {
         loadingData = false;
       });
@@ -49,8 +46,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MainPage.build()');
-
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: AppBar(

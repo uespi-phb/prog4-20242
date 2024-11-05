@@ -49,31 +49,59 @@ class MealsProvider with ChangeNotifier {
 
   void setFilter(MealFilter filter, bool value) {
     filters[filter] = value;
+    _saveFilter(filter, value);
     notifyListeners();
   }
 
   Future<void> loadData() async {
-    debugPrint('MealsProvider.loadData() ${DateTime.now().toIso8601String()}');
-
     await _loadCategories();
     await _loadMeals();
-
-    // await Future.delayed(const Duration(seconds: 4));
-
-    debugPrint('MealsProvider.loadData() ${DateTime.now().toIso8601String()}');
+    await _loadSettings();
+    notifyListeners();
   }
 
-  Future<void> _saveFavorite(Meal meal) async {
-    final url = '$apiUrl/meals/${meal.id}';
+  Future<void> _saveFilter(MealFilter filter, bool value) async {
+    final url = '$apiUrl/settings.json';
 
     final map = {
-      'isFavorite': meal.isFavorite,
+      'filters': {
+        'glutenFree': filters[MealFilter.glutenFree],
+        'lactoseFree': filters[MealFilter.lactoseFree],
+        'vegan': filters[MealFilter.vegan],
+        'vegetarian': filters[MealFilter.vegetarian],
+      },
     };
 
     await http.patch(
       Uri.parse(url),
       body: jsonEncode(map),
     );
+  }
+
+  Future<void> _saveFavorite(Meal meal) async {
+    final url = '$apiUrl/meals/${meal.id}.json';
+
+    final map = {'isFavorite': meal.isFavorite};
+
+    await http.patch(
+      Uri.parse(url),
+      body: jsonEncode(map),
+    );
+  }
+
+  Future<void> _loadSettings() async {
+    final url = '$apiUrl/settings.json';
+
+    final response = await http.get(
+      Uri.parse(url),
+    );
+    if (response.statusCode == 200) {
+      final jsonFilters = jsonDecode(response.body)['filters'];
+      filters[MealFilter.glutenFree] = jsonFilters['glutenFree'];
+      filters[MealFilter.lactoseFree] = jsonFilters['lactoseFree'];
+      filters[MealFilter.vegan] = jsonFilters['vegan'];
+      filters[MealFilter.vegetarian] = jsonFilters['vegetarian'];
+    }
   }
 
   Future<void> _loadCategories() async {
