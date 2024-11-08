@@ -20,9 +20,16 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
   bool obscuredText = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    obscuredText = widget.isSecret;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: widget.isSecret,
+      obscureText: obscuredText,
       decoration: InputDecoration(
         isDense: true,
         labelText: widget.labelText,
@@ -30,9 +37,13 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
         suffixIcon: widget.isSecret
             ? IconButton(
                 onPressed: () {
-                  debugPrint('OLHO');
+                  setState(() {
+                    obscuredText = !obscuredText;
+                  });
                 },
-                icon: const Icon(Icons.visibility),
+                icon: Icon(
+                  obscuredText ? Icons.visibility : Icons.visibility_off,
+                ),
               )
             : null,
         border: const OutlineInputBorder(
