@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+enum IconTextFormFieldType {
+  text,
+  password,
+  email,
+  phone,
+  cpf,
+}
 
 class IconTextFormField extends StatefulWidget {
   final String? labelText;
   final IconData? icon;
   final bool isSecret;
+  final IconTextFormFieldType fieldType;
+  final EdgeInsetsGeometry margin;
 
   const IconTextFormField({
     super.key,
     this.labelText,
     this.icon,
+    this.fieldType = IconTextFormFieldType.text,
+    this.margin = EdgeInsets.zero,
     this.isSecret = false,
   });
 
@@ -17,37 +31,77 @@ class IconTextFormField extends StatefulWidget {
 }
 
 class _IconTextFormFieldState extends State<IconTextFormField> {
+  TextInputFormatter? inputFormatter;
   bool obscuredText = false;
 
   @override
   void initState() {
     super.initState();
 
+    setInputFormatter();
+
     obscuredText = widget.isSecret;
+  }
+
+  void setInputFormatter() {
+    String? mask;
+    Map<String, RegExp>? filter;
+
+    switch (widget.fieldType) {
+      case IconTextFormFieldType.text:
+        break;
+      case IconTextFormFieldType.password:
+        break;
+      case IconTextFormFieldType.email:
+        break;
+      case IconTextFormFieldType.phone:
+        mask = '(##) #####-####';
+        filter = {
+          '#': RegExp(r'[0-9]'),
+        };
+        break;
+      case IconTextFormFieldType.cpf:
+        mask = '###.###.###-##';
+        filter = {
+          '#': RegExp(r'[0-9]'),
+        };
+        break;
+    }
+
+    inputFormatter = MaskTextInputFormatter(
+      mask: mask,
+      filter: filter,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: obscuredText,
-      decoration: InputDecoration(
-        isDense: true,
-        labelText: widget.labelText,
-        prefixIcon: Icon(widget.icon),
-        suffixIcon: widget.isSecret
-            ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    obscuredText = !obscuredText;
-                  });
-                },
-                icon: Icon(
-                  obscuredText ? Icons.visibility : Icons.visibility_off,
-                ),
-              )
-            : null,
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+    final inputFormatters = (inputFormatter != null) ? [inputFormatter!] : null;
+
+    return Padding(
+      padding: widget.margin,
+      child: TextFormField(
+        inputFormatters: inputFormatters,
+        obscureText: obscuredText,
+        decoration: InputDecoration(
+          isDense: true,
+          labelText: widget.labelText,
+          prefixIcon: Icon(widget.icon),
+          suffixIcon: widget.isSecret
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      obscuredText = !obscuredText;
+                    });
+                  },
+                  icon: Icon(
+                    obscuredText ? Icons.visibility : Icons.visibility_off,
+                  ),
+                )
+              : null,
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(18.0)),
+          ),
         ),
       ),
     );

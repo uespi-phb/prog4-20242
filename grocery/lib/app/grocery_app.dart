@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/app/app_theme.dart';
 
-import '../auth/auth_page.dart';
+import '../auth/sign_in_page.dart';
+import '../auth/sign_up_page.dart';
+import './app_routes.dart';
 
 class GroceryApp extends StatelessWidget {
   const GroceryApp({super.key});
@@ -11,7 +13,11 @@ class GroceryApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.ligth(Colors.green),
-      home: const AuthPage(),
+      initialRoute: AppRoutes.signIn,
+      routes: {
+        AppRoutes.signIn: (_) => const SignInPage(),
+        AppRoutes.signUp: (_) => const SignUpPage(),
+      },
     );
   }
 }
