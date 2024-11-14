@@ -5,7 +5,26 @@ import '../app/app_routes.dart';
 import './icon_text_form_field.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  SignInPage({super.key}) {
+    _emailController.text = 'fulano@uespi.br';
+    _passwordController.text = '12345678';
+  }
+
+  void _validateForm() {
+    debugPrint('_validateForm()');
+
+    if (_formKey.currentState?.validate() ?? false) {
+      debugPrint('Validation passed');
+    } else {
+      debugPrint('Validation failed');
+    }
+    debugPrint('\tEmail: ${_emailController.text}');
+    debugPrint('\tSenha: ${_passwordController.text}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,101 +110,108 @@ class SignInPage extends StatelessWidget {
                   ),
                 ),
                 // Form fields
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // E-mail Field
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 15.0),
-                      child: IconTextFormField(
-                        labelText: 'E-mail',
-                        icon: Icons.email,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // E-mail Field
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: IconTextFormField(
+                          labelText: 'E-mail',
+                          fieldType: IconTextFormFieldType.email,
+                          controller: _emailController,
+                        ),
                       ),
-                    ),
-                    // Password Field
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 15.0),
-                      child: IconTextFormField(
-                        labelText: 'Senha',
-                        icon: Icons.lock,
-                        isSecret: true,
+                      // Password Field
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: IconTextFormField(
+                          labelText: 'Senha',
+                          fieldType: IconTextFormFieldType.password,
+                          isSecret: true,
+                          controller: _passwordController,
+                        ),
                       ),
-                    ),
 
-                    // Enter Button
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.primaryColor,
-                          minimumSize: const Size.fromHeight(48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                      // Enter Button
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.primaryColor,
+                            minimumSize: const Size.fromHeight(48),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
+                          child: const Text(
+                            'Entrar',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          onPressed: () {
+                            _validateForm();
+                          },
                         ),
                       ),
-                    ),
-                    // Forgot Password Button
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        style:
-                            TextButton.styleFrom(foregroundColor: Colors.red),
-                        onPressed: () {},
-                        child: const Text('Esqueci a Senha'),
+                      // Forgot Password Button
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          style:
+                              TextButton.styleFrom(foregroundColor: Colors.red),
+                          onPressed: () {},
+                          child: const Text('Esqueci a Senha'),
+                        ),
                       ),
-                    ),
-                    // Divider
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            color: Colors.grey.withAlpha(128),
-                            thickness: 2.0,
+                      // Divider
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: Colors.grey.withAlpha(128),
+                              thickness: 2.0,
+                            ),
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text('OU'),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            color: Colors.grey.withAlpha(128),
-                            thickness: 2.0,
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text('OU'),
                           ),
-                        ),
-                      ],
-                    ),
-                    // Create Account Button
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: theme.primaryColor,
-                          minimumSize: const Size.fromHeight(48.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                          Expanded(
+                            child: Divider(
+                              color: Colors.grey.withAlpha(128),
+                              thickness: 2.0,
+                            ),
                           ),
-                          side: BorderSide(
-                            width: 2.0,
-                            color: theme.primaryColor,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(AppRoutes.signUp);
-                        },
-                        child: const Text('Criar Conta'),
+                        ],
                       ),
-                    )
-                  ],
+                      // Create Account Button
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: theme.primaryColor,
+                            minimumSize: const Size.fromHeight(48.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            side: BorderSide(
+                              width: 2.0,
+                              color: theme.primaryColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(AppRoutes.signUp);
+                          },
+                          child: const Text('Criar Conta'),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

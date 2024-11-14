@@ -15,8 +15,8 @@ class GroceryApp extends StatelessWidget {
       theme: AppTheme.ligth(Colors.green),
       initialRoute: AppRoutes.signIn,
       routes: {
-        AppRoutes.signIn: (_) => const SignInPage(),
-        AppRoutes.signUp: (_) => const SignUpPage(),
+        AppRoutes.signIn: (_) => SignInPage(),
+        AppRoutes.signUp: (_) => SignUpPage(),
       },
     );
   }

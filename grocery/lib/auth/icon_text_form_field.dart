@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grocery/utils/validators/phone_validator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+import '../utils/validators/validator.dart';
 
 enum IconTextFormFieldType {
   text,
@@ -16,9 +19,13 @@ class IconTextFormField extends StatefulWidget {
   final bool isSecret;
   final IconTextFormFieldType fieldType;
   final EdgeInsetsGeometry margin;
+  final TextEditingController? controller;
+  final Validator? validator;
 
   const IconTextFormField({
     super.key,
+    this.controller,
+    this.validator,
     this.labelText,
     this.icon,
     this.fieldType = IconTextFormFieldType.text,
@@ -32,18 +39,19 @@ class IconTextFormField extends StatefulWidget {
 
 class _IconTextFormFieldState extends State<IconTextFormField> {
   TextInputFormatter? inputFormatter;
+  Validator? validator;
   bool obscuredText = false;
 
   @override
   void initState() {
     super.initState();
 
-    setInputFormatter();
+    _setInputFormatter();
 
     obscuredText = widget.isSecret;
   }
 
-  void setInputFormatter() {
+  void _setInputFormatter() {
     String? mask;
     Map<String, RegExp>? filter;
 
@@ -51,20 +59,24 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
       case IconTextFormFieldType.text:
         break;
       case IconTextFormFieldType.password:
+        // validator = _passwordValidator;
         break;
       case IconTextFormFieldType.email:
+        // validator = _emailValidator;
         break;
       case IconTextFormFieldType.phone:
         mask = '(##) #####-####';
         filter = {
-          '#': RegExp(r'[0-9]'),
+          '#': RegExp(r'\d'),
         };
+        validator = PhoneValidator();
         break;
       case IconTextFormFieldType.cpf:
         mask = '###.###.###-##';
         filter = {
-          '#': RegExp(r'[0-9]'),
+          '#': RegExp(r'\d'),
         };
+        // validator = _cpfValidator;
         break;
     }
 
@@ -82,6 +94,8 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
       padding: widget.margin,
       child: TextFormField(
         inputFormatters: inputFormatters,
+        validator: validator?.validator,
+        controller: widget.controller,
         obscureText: obscuredText,
         decoration: InputDecoration(
           isDense: true,

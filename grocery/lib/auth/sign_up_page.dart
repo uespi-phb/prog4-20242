@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'icon_text_form_field.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+  final _formKey = GlobalKey<FormState>();
+
+  SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,58 +40,66 @@ class SignUpPage extends StatelessWidget {
                 top: Radius.circular(40.0),
               ),
             ),
-            child: Column(
-              children: [
-                const IconTextFormField(
-                  labelText: 'E-mail',
-                  icon: Icons.email,
-                  margin: EdgeInsets.only(bottom: 15.0),
-                ),
-                const IconTextFormField(
-                  labelText: 'Senha',
-                  icon: Icons.lock,
-                  isSecret: true,
-                  margin: EdgeInsets.only(bottom: 15.0),
-                ),
-                const IconTextFormField(
-                  labelText: 'Nome',
-                  icon: Icons.person,
-                  margin: EdgeInsets.only(bottom: 15.0),
-                ),
-                const IconTextFormField(
-                  labelText: 'Celular',
-                  icon: Icons.phone,
-                  fieldType: IconTextFormFieldType.phone,
-                  margin: EdgeInsets.only(bottom: 15.0),
-                ),
-                const IconTextFormField(
-                  labelText: 'CPF',
-                  icon: Icons.credit_card,
-                  fieldType: IconTextFormFieldType.cpf,
-                  margin: EdgeInsets.only(bottom: 15.0),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    minimumSize: const Size.fromHeight(48),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const IconTextFormField(
+                    labelText: 'E-mail',
+                    fieldType: IconTextFormFieldType.email,
+                    margin: EdgeInsets.only(bottom: 15.0),
+                  ),
+                  const IconTextFormField(
+                    labelText: 'Senha',
+                    fieldType: IconTextFormFieldType.password,
+                    isSecret: true,
+                    margin: EdgeInsets.only(bottom: 15.0),
+                  ),
+                  const IconTextFormField(
+                    labelText: 'Nome',
+                    icon: Icons.person,
+                    fieldType: IconTextFormFieldType.text,
+                    margin: EdgeInsets.only(bottom: 15.0),
+                  ),
+                  const IconTextFormField(
+                    labelText: 'Celular',
+                    icon: Icons.phone,
+                    fieldType: IconTextFormFieldType.phone,
+                    margin: EdgeInsets.only(bottom: 15.0),
+                  ),
+                  const IconTextFormField(
+                    labelText: 'CPF',
+                    icon: Icons.credit_card,
+                    fieldType: IconTextFormFieldType.cpf,
+                    margin: EdgeInsets.only(bottom: 15.0),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      minimumSize: const Size.fromHeight(48),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
+                    onPressed: _formValidate,
+                    child: const Text(
+                      'Entrar',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Entrar',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _formValidate() {
+    _formKey.currentState?.validate();
   }
 }
