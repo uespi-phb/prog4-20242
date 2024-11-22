@@ -1,13 +1,15 @@
 import 'package:grocery/utils/validators/validator.dart';
 
-class RequiredValidator implements Validator {
-  @override
-  String get errorMessage => 'Campo obrigatório';
+class RequiredValidator extends Validator {
+  RequiredValidator(
+    super.fieldName, [
+    super.message = 'campo obrgatório',
+  ]);
 
   @override
-  String? validator(String? value) {
-    if (value != null) {
-      return value.isEmpty ? errorMessage : null;
+  String? validate(String? value) {
+    if ((value != null) && value.isEmpty) {
+      return formattedMessage;
     }
     return null;
   }

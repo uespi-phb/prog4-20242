@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:grocery/utils/validators/min_length_validator.dart';
 
-import '../app/app_routes.dart';
 import './icon_text_form_field.dart';
+import '../app/app_routes.dart';
+import '../utils/validators/email_validator.dart';
 
 class SignInPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -15,8 +17,6 @@ class SignInPage extends StatelessWidget {
   }
 
   void _validateForm() {
-    debugPrint('_validateForm()');
-
     if (_formKey.currentState?.validate() ?? false) {
       debugPrint('Validation passed');
     } else {
@@ -121,7 +121,9 @@ class SignInPage extends StatelessWidget {
                         child: IconTextFormField(
                           labelText: 'E-mail',
                           fieldType: IconTextFormFieldType.email,
+                          icon: Icons.email,
                           controller: _emailController,
+                          validator: EmailValidator('E-mail'),
                         ),
                       ),
                       // Password Field
@@ -131,7 +133,9 @@ class SignInPage extends StatelessWidget {
                           labelText: 'Senha',
                           fieldType: IconTextFormFieldType.password,
                           isSecret: true,
+                          icon: Icons.lock,
                           controller: _passwordController,
+                          validator: MinLengthValidator('Senha', 6),
                         ),
                       ),
 

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grocery/utils/validators/phone_validator.dart';
 
-import 'icon_text_form_field.dart';
+import '../utils/validators/composite_validator.dart';
+import '../utils/validators/cpf_validator.dart';
+import '../utils/validators/max_length_validator.dart';
+import './icon_text_form_field.dart';
+import '../utils/validators/email_validator.dart';
+import '../utils/validators/min_length_validator.dart';
 
 class SignUpPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -44,34 +50,47 @@ class SignUpPage extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  const IconTextFormField(
+                  IconTextFormField(
                     labelText: 'E-mail',
                     fieldType: IconTextFormFieldType.email,
-                    margin: EdgeInsets.only(bottom: 15.0),
+                    icon: Icons.email,
+                    validator: EmailValidator('E-mail'),
+                    margin: const EdgeInsets.only(bottom: 15.0),
                   ),
-                  const IconTextFormField(
+                  IconTextFormField(
                     labelText: 'Senha',
                     fieldType: IconTextFormFieldType.password,
+                    icon: Icons.lock,
                     isSecret: true,
-                    margin: EdgeInsets.only(bottom: 15.0),
+                    validator: MinLengthValidator('Senha', 6),
+                    margin: const EdgeInsets.only(bottom: 15.0),
                   ),
-                  const IconTextFormField(
+                  IconTextFormField(
                     labelText: 'Nome',
                     icon: Icons.person,
                     fieldType: IconTextFormFieldType.text,
-                    margin: EdgeInsets.only(bottom: 15.0),
+                    validator: CompositeValidator(
+                      'Nome',
+                      [
+                        MinLengthValidator('Nome', 5),
+                        MaxLengthValidator('Nome', 50),
+                      ],
+                    ),
+                    margin: const EdgeInsets.only(bottom: 15.0),
                   ),
-                  const IconTextFormField(
+                  IconTextFormField(
                     labelText: 'Celular',
                     icon: Icons.phone,
                     fieldType: IconTextFormFieldType.phone,
-                    margin: EdgeInsets.only(bottom: 15.0),
+                    validator: PhoneValidator('Celular'),
+                    margin: const EdgeInsets.only(bottom: 15.0),
                   ),
-                  const IconTextFormField(
+                  IconTextFormField(
                     labelText: 'CPF',
                     icon: Icons.credit_card,
                     fieldType: IconTextFormFieldType.cpf,
-                    margin: EdgeInsets.only(bottom: 15.0),
+                    validator: CpfValidator('CPF'),
+                    margin: const EdgeInsets.only(bottom: 15.0),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(

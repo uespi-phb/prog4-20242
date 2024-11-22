@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grocery/utils/validators/phone_validator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../utils/validators/validator.dart';
@@ -21,13 +20,17 @@ class IconTextFormField extends StatefulWidget {
   final EdgeInsetsGeometry margin;
   final TextEditingController? controller;
   final Validator? validator;
+  final String? hintText;
+  final InputBorder? border;
 
   const IconTextFormField({
     super.key,
     this.controller,
-    this.validator,
     this.labelText,
     this.icon,
+    this.validator,
+    this.hintText,
+    this.border,
     this.fieldType = IconTextFormFieldType.text,
     this.margin = EdgeInsets.zero,
     this.isSecret = false,
@@ -39,7 +42,6 @@ class IconTextFormField extends StatefulWidget {
 
 class _IconTextFormFieldState extends State<IconTextFormField> {
   TextInputFormatter? inputFormatter;
-  Validator? validator;
   bool obscuredText = false;
 
   @override
@@ -59,24 +61,20 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
       case IconTextFormFieldType.text:
         break;
       case IconTextFormFieldType.password:
-        // validator = _passwordValidator;
         break;
       case IconTextFormFieldType.email:
-        // validator = _emailValidator;
         break;
       case IconTextFormFieldType.phone:
         mask = '(##) #####-####';
         filter = {
           '#': RegExp(r'\d'),
         };
-        validator = PhoneValidator();
         break;
       case IconTextFormFieldType.cpf:
         mask = '###.###.###-##';
         filter = {
           '#': RegExp(r'\d'),
         };
-        // validator = _cpfValidator;
         break;
     }
 
@@ -93,13 +91,14 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
     return Padding(
       padding: widget.margin,
       child: TextFormField(
+        validator: widget.validator?.validate,
         inputFormatters: inputFormatters,
-        validator: validator?.validator,
         controller: widget.controller,
         obscureText: obscuredText,
         decoration: InputDecoration(
           isDense: true,
           labelText: widget.labelText,
+          hintText: widget.hintText,
           prefixIcon: Icon(widget.icon),
           suffixIcon: widget.isSecret
               ? IconButton(
@@ -113,9 +112,10 @@ class _IconTextFormFieldState extends State<IconTextFormField> {
                   ),
                 )
               : null,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(18.0)),
-          ),
+          border: widget.border ??
+              const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(18.0)),
+              ),
         ),
       ),
     );

@@ -1,15 +1,17 @@
 import './validator.dart';
 
-class PhoneValidator implements Validator {
-  @override
-  String get errorMessage => 'Telefone Inválido';
+class PhoneValidator extends Validator {
+  PhoneValidator(
+    super.fieldName, [
+    super.message = 'telefone inválido',
+  ]);
 
   @override
-  String? validator(String? value) {
+  String? validate(String? value) {
     if (value != null) {
-      value = value.replaceAll(RegExp(r'[^\d]'), '');
-      if (value != 10 && value != 11) {
-        return 'Telefone inválido';
+      final cleanedValue = value.replaceAll(RegExp(r'\D'), '');
+      if (cleanedValue.length != 10 || cleanedValue.length != 11) {
+        return formattedMessage;
       }
     }
     return null;
