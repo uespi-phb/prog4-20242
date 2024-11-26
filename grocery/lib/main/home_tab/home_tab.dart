@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../app/app_data.dart';
 import '../../models/category.dart';
-import 'category_tile.dart';
+import './category_tile.dart';
+import './product_tile.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -15,7 +17,6 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    const categories = Category.values;
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -64,6 +65,7 @@ class _HomeTabState extends State<HomeTab> {
       ),
       body: Column(
         children: [
+          // Search Field
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextFormField(
@@ -90,29 +92,45 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
           ),
-          SizedBox(
+          // Categories List
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             height: 40,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (_, index) {
-                  return CategoryTile(
-                    category: categories[index],
-                    isSelected: index == selectedIndex,
-                    onClick: (category) {
-                      setState(() {
-                        selectedIndex = (selectedIndex != category.index)
-                            ? category.index
-                            : null;
-                      });
-                    },
-                  );
-                },
-                separatorBuilder: (_, index) {
-                  return const SizedBox(width: 15);
-                },
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: AppData.categories.length,
+              itemBuilder: (_, index) {
+                return CategoryTile(
+                  category: AppData.categories[index],
+                  isSelected: index == selectedIndex,
+                  onClick: (category) {
+                    setState(() {
+                      selectedIndex = (selectedIndex != category.index)
+                          ? category.index
+                          : null;
+                    });
+                  },
+                );
+              },
+              separatorBuilder: (_, index) {
+                return const SizedBox(width: 15);
+              },
+            ),
+          ),
+          // Product Grid
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+              physics: const BouncingScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 9 / 11,
+              ),
+              itemCount: AppData.products.length,
+              itemBuilder: (_, index) => ProductTile(
+                product: AppData.products[index],
               ),
             ),
           ),
