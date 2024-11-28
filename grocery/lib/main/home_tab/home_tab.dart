@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../app/app_data.dart';
-import '../../models/category.dart';
 import './category_tile.dart';
 import './product_tile.dart';
 
