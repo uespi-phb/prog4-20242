@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/utils/formatters/currency.dart';
 
+import './value_picker.dart';
+import '../utils/formatters/currency.dart';
 import '../models/product.dart';
 
-class ProductDetailPage extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   final Product product;
 
   const ProductDetailPage({
@@ -12,57 +13,114 @@ class ProductDetailPage extends StatelessWidget {
   });
 
   @override
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  int quantity = 1;
+
+  void addToCart() {
+    Navigator.of(context).pop(quantity);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.grey.shade300,
-        elevation: 0,
-      ),
       backgroundColor: Colors.grey.shade300,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
         children: [
-          Expanded(
-            child: Image.asset(product.imageUrl),
+          // Product Details
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Product Image
+              Expanded(
+                child: Hero(
+                  tag: widget.product.imageUrl,
+                  child: Image.asset(widget.product.imageUrl),
+                ),
+              ),
+              // Product Details
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(40)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Product Name
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.product.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.grey.shade900,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          QuantityPicker(quantity,
+                              sufix: ' ${widget.product.unit}',
+                              minQuantity: 0, onChange: (value) {
+                            setState(() {
+                              quantity = value;
+                            });
+                          }),
+                        ],
+                      ),
+                      // Product Price
+                      Text(
+                        CurrencyFormatter.format(widget.product.price),
+                        style: TextStyle(
+                          color: theme.primaryColor.withAlpha(230),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      // Product Description
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              widget.product.description * 3,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                height: 1.35,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Add to Cart Button
+
+                      ElevatedButton.icon(
+                        onPressed: quantity > 0 ? addToCart : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.primaryColor.withAlpha(230),
+                        ),
+                        label: const Text('Adicionar ao Carrinho'),
+                        icon: const Icon(Icons.add_shopping_cart_outlined),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          Container(
-            padding: const EdgeInsets.all(30),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.name,
-                  style: TextStyle(
-                    color: Colors.grey.shade900,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  CurrencyFormatter.format(product.price),
-                  style: TextStyle(
-                    color: theme.primaryColor.withAlpha(230),
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  product.description,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
+          // Back Button
+          const SafeArea(
+            child: BackButton(),
           ),
         ],
       ),

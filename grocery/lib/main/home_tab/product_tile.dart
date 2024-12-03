@@ -12,6 +12,8 @@ class ProductTile extends StatelessWidget {
     required this.product,
   });
 
+  void _addToCart(int quantity) {}
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -21,10 +23,15 @@ class ProductTile extends StatelessWidget {
         // Product Card
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(
+            final future = Navigator.of(context).pushNamed(
               AppRoutes.productDetail,
               arguments: product,
             );
+            future.then((quantity) {
+              if (quantity != null) {
+                _addToCart(quantity as int);
+              }
+            });
           },
           child: Card(
             color: Colors.white,
@@ -39,7 +46,10 @@ class ProductTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: Image.asset(product.imageUrl),
+                    child: Hero(
+                      tag: product.imageUrl,
+                      child: Image.asset(product.imageUrl),
+                    ),
                   ),
                   Text(
                     product.name,
