@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grocery/models/category.dart';
+import 'package:grocery/provider/product_provider.dart';
 
-import '../../app/app_data.dart';
+import '../../provider/category_provider.dart';
 import './category_tile.dart';
 import './product_tile.dart';
 
@@ -95,42 +98,54 @@ class _HomeTabState extends State<HomeTab> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             height: 40,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: AppData.categories.length,
-              itemBuilder: (_, index) {
-                return CategoryTile(
-                  category: AppData.categories[index],
-                  isSelected: index == selectedIndex,
-                  onClick: (category) {
-                    setState(() {
-                      selectedIndex = (selectedIndex != category.index)
-                          ? category.index
-                          : null;
-                    });
+            child: Consumer(
+              builder: (_, ref, __) {
+                final categories = ref.watch(categoryProvider);
+
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (_, index) {
+                    return CategoryTile(
+                      category: categories[index],
+                      isSelected: index == selectedIndex,
+                      onClick: (category) {
+                        setState(() {
+                          selectedIndex = (selectedIndex != category.index)
+                              ? category.index
+                              : null;
+                        });
+                      },
+                    );
+                  },
+                  separatorBuilder: (_, index) {
+                    return const SizedBox(width: 15);
                   },
                 );
-              },
-              separatorBuilder: (_, index) {
-                return const SizedBox(width: 15);
               },
             ),
           ),
           // Product Grid
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 9 / 11,
-              ),
-              itemCount: AppData.products.length,
-              itemBuilder: (_, index) => ProductTile(
-                product: AppData.products[index],
-              ),
+            child: Consumer(
+              builder: (_, WidgetRef ref, __) {
+                final products = ref.watch(productProvider);
+
+                return GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                  physics: const BouncingScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 9 / 11,
+                  ),
+                  itemCount: products.length,
+                  itemBuilder: (_, index) => ProductTile(
+                    product: products[index],
+                  ),
+                );
+              },
             ),
           ),
         ],

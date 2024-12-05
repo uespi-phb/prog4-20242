@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app_grocery.dart';
 
 void main() {
-  runApp(const GroceryApp());
+  runApp(
+    const ProviderScope(
+      child: GroceryApp(),
+    ),
+  );
 }

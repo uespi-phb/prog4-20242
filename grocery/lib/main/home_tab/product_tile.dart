@@ -23,15 +23,10 @@ class ProductTile extends StatelessWidget {
         // Product Card
         GestureDetector(
           onTap: () {
-            final future = Navigator.of(context).pushNamed(
+            Navigator.of(context).pushNamed(
               AppRoutes.productDetail,
               arguments: product,
             );
-            future.then((quantity) {
-              if (quantity != null) {
-                _addToCart(quantity as int);
-              }
-            });
           },
           child: Card(
             color: Colors.white,

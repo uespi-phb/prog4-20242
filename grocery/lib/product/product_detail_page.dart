@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './value_picker.dart';
 import '../utils/formatters/currency.dart';
 import '../models/product.dart';
+import '../provider/cart_provider.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Product product;
@@ -20,7 +21,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   int quantity = 1;
 
   void addToCart() {
-    Navigator.of(context).pop(quantity);
+    Navigator.of(context).pop();
   }
 
   @override

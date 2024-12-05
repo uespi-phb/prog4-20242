@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/app/app_theme.dart';
-import 'package:grocery/provider/grocery_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../models/product.dart';
 import './app_routes.dart';
@@ -37,14 +35,11 @@ class GroceryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => GroceryProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.ligth(Colors.green),
-        initialRoute: AppRoutes.main,
-        onGenerateRoute: _generateRoute,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.ligth(Colors.green),
+      initialRoute: AppRoutes.main,
+      onGenerateRoute: _generateRoute,
     );
   }
 }

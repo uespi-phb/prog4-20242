@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './home_tab/home_tab.dart';
+import 'cart_tab/cart_tab.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -22,7 +23,7 @@ class _MainPageState extends State<MainPage> {
         controller: pageController,
         children: [
           const HomeTab(),
-          Container(color: Colors.orange),
+          const CartTab(),
           Container(color: Colors.yellow),
           Container(color: Colors.blue),
         ],
