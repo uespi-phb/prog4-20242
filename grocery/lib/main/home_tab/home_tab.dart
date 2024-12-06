@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:grocery/models/category.dart';
 import 'package:grocery/provider/product_provider.dart';
 
 import '../../provider/category_provider.dart';
@@ -100,7 +99,7 @@ class _HomeTabState extends State<HomeTab> {
             height: 40,
             child: Consumer(
               builder: (_, ref, __) {
-                final categories = ref.watch(categoryProvider);
+                final categories = ref.read(categoryProvider);
 
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
@@ -129,7 +128,7 @@ class _HomeTabState extends State<HomeTab> {
           Expanded(
             child: Consumer(
               builder: (_, WidgetRef ref, __) {
-                final products = ref.watch(productProvider);
+                final products = ref.read(productProvider);
 
                 return GridView.builder(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),

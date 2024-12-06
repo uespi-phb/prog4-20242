@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './value_picker.dart';
+import '../provider/cart_provider.dart';
+import 'quantity_picker.dart';
 import '../utils/formatters/currency.dart';
 import '../models/product.dart';
-import '../provider/cart_provider.dart';
 
-class ProductDetailPage extends StatefulWidget {
+class ProductDetailPage extends ConsumerStatefulWidget {
   final Product product;
 
   const ProductDetailPage({
@@ -14,13 +15,17 @@ class ProductDetailPage extends StatefulWidget {
   });
 
   @override
-  State<ProductDetailPage> createState() => _ProductDetailPageState();
+  ConsumerState<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
   int quantity = 1;
 
   void addToCart() {
+    final cart = ref.read(cartProvider);
+
+    cart.updateProduct(widget.product, quantity);
+
     Navigator.of(context).pop();
   }
 

@@ -2,8 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/product.dart';
 
-typedef ProductList = List<Product>;
-
 final productProvider = Provider((_) => _productData);
 
 const _productData = [

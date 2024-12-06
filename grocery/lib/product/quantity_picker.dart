@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './circular_icon_button.dart';
 
-class QuantityPicker extends StatelessWidget {
+class QuantityPicker extends StatefulWidget {
   final int quantity;
   final int? minQuantity;
   final int? maxQuantity;
@@ -20,21 +20,37 @@ class QuantityPicker extends StatelessWidget {
     this.maxQuantity,
   });
 
+  @override
+  State<QuantityPicker> createState() => _QuantityPickerState();
+}
+
+class _QuantityPickerState extends State<QuantityPicker> {
+  int quantity = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.quantity;
+  }
+
   String get _formatedQuantity {
-    final qtyPrefix = prefix ?? '';
-    final qtySufix = sufix ?? '';
-    return '$qtyPrefix$quantity$qtySufix';
+    final qtyPrefix = widget.prefix ?? '';
+    final qtySufix = widget.sufix ?? '';
+    return '$qtyPrefix${widget.quantity}$qtySufix';
   }
 
   void _notifyChange(int delta) {
-    final newQuantity = quantity + delta;
-    if ((minQuantity != null) && (newQuantity < minQuantity!)) {
+    final newQuantity = widget.quantity + delta;
+    if ((widget.minQuantity != null) && (newQuantity < widget.minQuantity!)) {
       return;
     }
-    if ((maxQuantity != null) && (newQuantity > maxQuantity!)) {
+    if ((widget.maxQuantity != null) && (newQuantity > widget.maxQuantity!)) {
       return;
     }
-    onChange(newQuantity);
+    setState(() {
+      quantity = newQuantity;
+    });
+    widget.onChange(quantity);
   }
 
   @override
