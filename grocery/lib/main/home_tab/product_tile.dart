@@ -12,7 +12,7 @@ class ProductTile extends StatelessWidget {
     required this.product,
   });
 
-  void _addToCart(int quantity) {}
+  // void _addToCart(int quantity) {}
 
   @override
   Widget build(BuildContext context) {

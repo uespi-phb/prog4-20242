@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/product/quantity_picker.dart';
 
 import '../../models/product.dart';
-import '../../provider/cart_provider.dart';
 import '../../utils/formatters/currency.dart';
 
 class CartItemTile extends ConsumerWidget {

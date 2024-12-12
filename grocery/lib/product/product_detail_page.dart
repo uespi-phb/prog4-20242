@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../provider/cart_provider.dart';
-import 'quantity_picker.dart';
+import './quantity_picker.dart';
+import '../providers/cart_provider.dart';
 import '../utils/formatters/currency.dart';
 import '../models/product.dart';
 
@@ -21,17 +21,15 @@ class ProductDetailPage extends ConsumerStatefulWidget {
 class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
   int quantity = 1;
 
-  void addToCart() {
-    final cart = ref.read(cartProvider);
-
-    cart.updateProduct(widget.product, quantity);
-
-    Navigator.of(context).pop();
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    void addToCart() {
+      final cart = ref.read(cartProvider.notifier);
+      cart.updateByProduct(widget.product, quantity);
+      Navigator.of(context).pop();
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade300,

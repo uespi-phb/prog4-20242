@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:grocery/provider/product_provider.dart';
+import 'package:grocery/providers/product_provider.dart';
 
-import '../../provider/category_provider.dart';
+import '../../providers/cart_provider.dart';
+import '../../providers/category_provider.dart';
 import './category_tile.dart';
 import './product_tile.dart';
 
-class HomeTab extends StatefulWidget {
+class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});
 
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  ConsumerState<HomeTab> createState() => _HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class _HomeTabState extends ConsumerState<HomeTab> {
   int? selectedIndex;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    debugPrint('>>>> HomeTab.build()');
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -53,12 +56,18 @@ class _HomeTabState extends State<HomeTab> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(right: 12),
-              child: Badge(
-                label: const Text('0'),
-                child: Icon(
-                  Icons.shopping_cart,
-                  color: theme.primaryColor,
-                ),
+              child: Consumer(
+                builder: (_, ref, __) {
+                  final label =
+                      ref.watch(cartProvider.notifier).cartItemsCountLabel;
+                  return Badge(
+                    label: Text(label),
+                    child: Icon(
+                      Icons.shopping_cart,
+                      color: theme.primaryColor,
+                    ),
+                  );
+                },
               ),
             ),
           ),
