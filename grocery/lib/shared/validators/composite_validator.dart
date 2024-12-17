@@ -1,4 +1,4 @@
-import './validator.dart';
+import 'validator.dart';
 
 class CompositeValidator extends Validator {
   final List<Validator> validators;

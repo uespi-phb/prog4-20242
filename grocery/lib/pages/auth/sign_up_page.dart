@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/utils/validators/phone_validator.dart';
+import 'package:grocery/shared/validators/phone_validator.dart';
 
-import '../utils/validators/composite_validator.dart';
-import '../utils/validators/cpf_validator.dart';
-import '../utils/validators/max_length_validator.dart';
-import './icon_text_form_field.dart';
-import '../utils/validators/email_validator.dart';
-import '../utils/validators/min_length_validator.dart';
+import '../../shared/validators/composite_validator.dart';
+import '../../shared/validators/cpf_validator.dart';
+import '../../shared/validators/max_length_validator.dart';
+import 'icon_text_form_field.dart';
+import '../../shared/validators/email_validator.dart';
+import '../../shared/validators/min_length_validator.dart';
 
 class SignUpPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

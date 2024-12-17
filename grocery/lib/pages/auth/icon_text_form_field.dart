@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../utils/validators/validator.dart';
+import '../../shared/validators/validator.dart';
 
 enum IconTextFormFieldType {
   text,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './quantity_picker.dart';
-import '../providers/cart_provider.dart';
-import '../utils/formatters/currency.dart';
-import '../models/product.dart';
+import '../../shared/widgets/quantity_picker.dart';
+import '../../providers/cart_provider.dart';
+import '../../shared/formatters/currency.dart';
+import '../../models/product.dart';
 
 class ProductDetailPage extends ConsumerStatefulWidget {
   final Product product;

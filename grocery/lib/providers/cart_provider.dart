@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/product.dart';
@@ -42,19 +41,28 @@ class ShoppingCart extends Notifier<Map<String, CartItem>> {
     return total < 10 ? '$total' : '9+';
   }
 
+  double get cartTotalPrice {
+    return state.values
+        .fold(0, (total, item) => total + item.quantity * item.price);
+  }
+
   void updateByProduct(Product product, int quantity) {
     final cartItems = Map<String, CartItem>.from(state);
     cartItems.update(
       product.id,
       (cartItem) {
-        return cartItem.copyWith(quantity: cartItem.quantity + quantity);
+        return cartItem.copyWith(quantity: quantity);
       },
       ifAbsent: () => CartItem(quantity, product.price),
     );
 
     state = cartItems;
+  }
 
-    debugPrint(state.toString());
+  void deleteByProduct(Product product) {
+    final cartItems = Map<String, CartItem>.from(state);
+    cartItems.remove(product.id);
+    state = cartItems;
   }
 }
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/product_provider.dart';
-import '../../providers/cart_provider.dart';
-import '../../providers/category_provider.dart';
-import './category_tile.dart';
-import './product_tile.dart';
+import '../../../providers/product_provider.dart';
+import '../../../providers/cart_provider.dart';
+import '../../../providers/category_provider.dart';
+import 'category_tile.dart';
+import 'product_tile.dart';
 
 class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});
@@ -20,8 +20,6 @@ class _HomeTabState extends ConsumerState<HomeTab> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    debugPrint('>>>> HomeTab.build()');
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,

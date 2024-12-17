@@ -1,4 +1,4 @@
-import './validator.dart';
+import 'validator.dart';
 
 class MinLengthValidator extends Validator {
   final int minLength;

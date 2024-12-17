@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './home_tab/home_tab.dart';
+import 'home_tab/home_tab.dart';
 import 'cart_tab/cart_tab.dart';
 
 class MainPage extends StatefulWidget {

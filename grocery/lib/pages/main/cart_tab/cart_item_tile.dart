@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:grocery/product/quantity_picker.dart';
+import 'package:grocery/shared/widgets/quantity_picker.dart';
 
-import '../../models/product.dart';
-import '../../providers/cart_provider.dart';
-import '../../utils/formatters/currency.dart';
+import '../../../models/product.dart';
+import '../../../providers/cart_provider.dart';
+import '../../../shared/formatters/currency.dart';
 
 class CartItemTile extends ConsumerWidget {
   final Product product;
@@ -56,10 +56,16 @@ class CartItemTile extends ConsumerWidget {
         ),
         trailing: QuantityPicker(
           quantity,
+          isDisposable: true,
+          minQuantity: 1,
           sufix: ' ${product.unit}',
           onChange: (value) {
             final cart = ref.read(cartProvider.notifier);
-            cart.updateByProduct(product, value - quantity);
+            if (value > 0) {
+              cart.updateByProduct(product, value);
+            } else {
+              cart.deleteByProduct(product);
+            }
           },
         ),
         shape: RoundedRectangleBorder(

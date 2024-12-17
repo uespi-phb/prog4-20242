@@ -3,10 +3,10 @@ import 'package:grocery/app/app_theme.dart';
 
 import '../models/product.dart';
 import './app_routes.dart';
-import '../product/product_detail_page.dart';
-import '../auth/sign_in_page.dart';
-import '../auth/sign_up_page.dart';
-import '../main/main_page.dart';
+import '../pages/product/product_detail_page.dart';
+import '../pages/auth/sign_in_page.dart';
+import '../pages/auth/sign_up_page.dart';
+import '../pages/main/main_page.dart';
 
 class GroceryApp extends StatelessWidget {
   const GroceryApp({super.key});

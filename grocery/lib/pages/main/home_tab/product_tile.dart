@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../app/app_routes.dart';
-import '../../utils/formatters/currency.dart';
-import '../../models/product.dart';
+import '../../../app/app_routes.dart';
+import '../../../shared/formatters/currency.dart';
+import '../../../models/product.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;

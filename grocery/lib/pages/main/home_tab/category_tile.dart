@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/category.dart';
+import '../../../models/category.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;

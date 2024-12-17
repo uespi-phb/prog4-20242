@@ -1,4 +1,4 @@
-import 'package:grocery/utils/validators/validator.dart';
+import 'package:grocery/shared/validators/validator.dart';
 
 class EmailValidator extends Validator {
   static const _emailRegExp =

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:grocery/utils/validators/min_length_validator.dart';
+import 'package:grocery/shared/validators/min_length_validator.dart';
 
-import './icon_text_form_field.dart';
-import '../app/app_routes.dart';
-import '../utils/validators/email_validator.dart';
+import 'icon_text_form_field.dart';
+import '../../app/app_routes.dart';
+import '../../shared/validators/email_validator.dart';
 
 class SignInPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

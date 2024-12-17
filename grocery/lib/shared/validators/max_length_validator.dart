@@ -1,4 +1,4 @@
-import './validator.dart';
+import 'validator.dart';
 
 class MaxLengthValidator extends Validator {
   final int maxLength;

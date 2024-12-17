@@ -8,12 +8,14 @@ class QuantityPicker extends StatefulWidget {
   final int? maxQuantity;
   final String? prefix;
   final String? sufix;
+  final bool isDisposable;
   final void Function(int) onChange;
 
   const QuantityPicker(
     this.quantity, {
-    required this.onChange,
     super.key,
+    required this.onChange,
+    this.isDisposable = false,
     this.prefix,
     this.sufix,
     this.minQuantity,
@@ -39,10 +41,15 @@ class _QuantityPickerState extends State<QuantityPicker> {
     return '$qtyPrefix${widget.quantity}$qtySufix';
   }
 
-  void _notifyChange(int delta) {
+  void _changeQuantity(int delta) {
     final newQuantity = widget.quantity + delta;
-    if ((widget.minQuantity != null) && (newQuantity < widget.minQuantity!)) {
-      return;
+    if (widget.minQuantity != null) {
+      if (newQuantity < widget.minQuantity!) {
+        if (widget.isDisposable) {
+          widget.onChange(newQuantity);
+        }
+        return;
+      }
     }
     if ((widget.maxQuantity != null) && (newQuantity > widget.maxQuantity!)) {
       return;
@@ -55,6 +62,8 @@ class _QuantityPickerState extends State<QuantityPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final disposable = quantity == widget.minQuantity;
+
     return Container(
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -73,10 +82,10 @@ class _QuantityPickerState extends State<QuantityPicker> {
         children: [
           // Decrement Button
           CircularIconButton(
-            onTap: () => _notifyChange(-1),
-            icon: Icons.remove_outlined,
+            onTap: () => _changeQuantity(-1),
+            icon: disposable ? Icons.delete_forever : Icons.remove_outlined,
+            color: disposable ? Colors.red : Colors.grey,
             padding: const EdgeInsets.all(2.5),
-            color: Colors.grey,
             iconColor: Colors.white,
           ),
           // Quantity
@@ -92,7 +101,7 @@ class _QuantityPickerState extends State<QuantityPicker> {
           ),
           // Incremente Button
           CircularIconButton(
-            onTap: () => _notifyChange(1),
+            onTap: () => _changeQuantity(1),
             icon: Icons.add_outlined,
             padding: const EdgeInsets.all(2.5),
             color: Theme.of(context).primaryColor,

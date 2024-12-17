@@ -1,4 +1,4 @@
-import './validator.dart';
+import 'validator.dart';
 
 class PhoneValidator extends Validator {
   PhoneValidator(
