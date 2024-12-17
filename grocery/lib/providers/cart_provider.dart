@@ -24,9 +24,12 @@ class CartItem {
 
 class ShoppingCart extends Notifier<Map<String, CartItem>> {
   @override
-  Map<String, CartItem> build() {
-    return {};
-  }
+  Map<String, CartItem> build() => {
+        '001': const CartItem(3, 2.50),
+        '002': const CartItem(1, 10.22),
+        '003': const CartItem(8, 9.45),
+        '005': const CartItem(2, 7.16),
+      };
 
   int get cartItemsCount {
     int total = 0;
@@ -55,6 +58,5 @@ class ShoppingCart extends Notifier<Map<String, CartItem>> {
   }
 }
 
-final cartProvider = NotifierProvider<ShoppingCart, Map<String, CartItem>>(
-  () => ShoppingCart(),
-);
+final cartProvider =
+    NotifierProvider<ShoppingCart, Map<String, CartItem>>(ShoppingCart.new);

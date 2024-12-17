@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:grocery/providers/product_provider.dart';
 
+import '../../providers/product_provider.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/category_provider.dart';
 import './category_tile.dart';
@@ -58,10 +58,10 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               padding: const EdgeInsets.only(right: 12),
               child: Consumer(
                 builder: (_, ref, __) {
-                  final label =
-                      ref.watch(cartProvider.notifier).cartItemsCountLabel;
+                  final cart = ref.read(cartProvider.notifier);
+                  ref.watch(cartProvider);
                   return Badge(
-                    label: Text(label),
+                    label: Text(cart.cartItemsCountLabel),
                     child: Icon(
                       Icons.shopping_cart,
                       color: theme.primaryColor,
@@ -149,9 +149,11 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                     childAspectRatio: 9 / 11,
                   ),
                   itemCount: products.length,
-                  itemBuilder: (_, index) => ProductTile(
-                    product: products[index],
-                  ),
+                  itemBuilder: (_, index) {
+                    return ProductTile(
+                      product: products[index],
+                    );
+                  },
                 );
               },
             ),

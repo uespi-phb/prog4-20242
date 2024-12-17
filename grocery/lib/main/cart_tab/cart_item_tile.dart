@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/product/quantity_picker.dart';
 
 import '../../models/product.dart';
+import '../../providers/cart_provider.dart';
 import '../../utils/formatters/currency.dart';
 
 class CartItemTile extends ConsumerWidget {
@@ -17,26 +18,49 @@ class CartItemTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('***** build()');
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: const Offset(2, 4),
+          ),
+        ],
+      ),
       child: ListTile(
-        title: Text(product.name),
+        title: Text(
+          product.name,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         subtitle: Text(
           CurrencyFormatter.format(product.price),
-        ),
-        leading: Image.asset(product.imageUrl),
-        trailing: SizedBox(
-          width: 120,
-          child: QuantityPicker(
-            quantity,
-            sufix: ' ${product.unit}',
-            onChange: (value) {
-              // final cart = ref.watch(cartProvider);
-              // cart.updateProduct(product, value);
-              // debugPrint('q=$value');
-            },
+          style: const TextStyle(
+            height: 1.5,
+            color: Colors.green,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+        leading: FractionallySizedBox(
+          widthFactor: 0.10,
+          child: Image.asset(
+            product.imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
+        trailing: QuantityPicker(
+          quantity,
+          sufix: ' ${product.unit}',
+          onChange: (value) {
+            final cart = ref.read(cartProvider.notifier);
+            cart.updateByProduct(product, value - quantity);
+          },
         ),
         shape: RoundedRectangleBorder(
           side: BorderSide(

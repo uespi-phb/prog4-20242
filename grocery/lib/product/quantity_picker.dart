@@ -69,6 +69,7 @@ class _QuantityPickerState extends State<QuantityPicker> {
         ],
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Decrement Button
           CircularIconButton(
@@ -84,7 +85,7 @@ class _QuantityPickerState extends State<QuantityPicker> {
             child: Text(
               _formatedQuantity,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
