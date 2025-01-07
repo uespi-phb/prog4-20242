@@ -38,7 +38,7 @@ class GroceryApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.ligth(Colors.green),
-      initialRoute: AppRoutes.main,
+      initialRoute: AppRoutes.signIn,
       onGenerateRoute: _generateRoute,
     );
   }

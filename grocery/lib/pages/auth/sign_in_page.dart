@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:grocery/shared/validators/min_length_validator.dart';
 
-import 'icon_text_form_field.dart';
+import './icon_text_form_field.dart';
+import '../../services/auth_service.dart';
 import '../../app/app_routes.dart';
 import '../../shared/validators/email_validator.dart';
 
@@ -10,20 +11,22 @@ class SignInPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authService = AuthService();
 
   SignInPage({super.key}) {
-    _emailController.text = 'fulano@uespi.br';
-    _passwordController.text = '12345678';
+    _emailController.text = 'fulano@email.com';
+    _passwordController.text = 'uespi1234';
   }
 
-  void _validateForm() {
+  void _validateForm() async {
     if (_formKey.currentState?.validate() ?? false) {
-      debugPrint('Validation passed');
+      await _authService.signIn(
+        _emailController.text,
+        _passwordController.text,
+      );
     } else {
       debugPrint('Validation failed');
     }
-    debugPrint('\tEmail: ${_emailController.text}');
-    debugPrint('\tSenha: ${_passwordController.text}');
   }
 
   @override
