@@ -10,7 +10,7 @@ class PhoneValidator extends Validator {
   String? validate(String? value) {
     if (value != null) {
       final cleanedValue = value.replaceAll(RegExp(r'\D'), '');
-      if (cleanedValue.length != 10 || cleanedValue.length != 11) {
+      if (cleanedValue.length != 10 && cleanedValue.length != 11) {
         return formattedMessage;
       }
     }

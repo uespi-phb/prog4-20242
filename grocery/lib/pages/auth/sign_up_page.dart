@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/shared/validators/phone_validator.dart';
 
+import '../../services/auth_service.dart';
 import '../../shared/validators/composite_validator.dart';
 import '../../shared/validators/cpf_validator.dart';
 import '../../shared/validators/max_length_validator.dart';
-import 'icon_text_form_field.dart';
 import '../../shared/validators/email_validator.dart';
 import '../../shared/validators/min_length_validator.dart';
+import 'icon_text_form_field.dart';
 
 class SignUpPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _cpfController = TextEditingController();
 
   SignUpPage({super.key});
 
@@ -51,6 +57,7 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 children: [
                   IconTextFormField(
+                    controller: _emailController,
                     labelText: 'E-mail',
                     fieldType: IconTextFormFieldType.email,
                     icon: Icons.email,
@@ -58,6 +65,7 @@ class SignUpPage extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 15.0),
                   ),
                   IconTextFormField(
+                    controller: _passwordController,
                     labelText: 'Senha',
                     fieldType: IconTextFormFieldType.password,
                     icon: Icons.lock,
@@ -66,6 +74,7 @@ class SignUpPage extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 15.0),
                   ),
                   IconTextFormField(
+                    controller: _nameController,
                     labelText: 'Nome',
                     icon: Icons.person,
                     fieldType: IconTextFormFieldType.text,
@@ -79,6 +88,7 @@ class SignUpPage extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 15.0),
                   ),
                   IconTextFormField(
+                    controller: _phoneController,
                     labelText: 'Celular',
                     icon: Icons.phone,
                     fieldType: IconTextFormFieldType.phone,
@@ -86,6 +96,7 @@ class SignUpPage extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 15.0),
                   ),
                   IconTextFormField(
+                    controller: _cpfController,
                     labelText: 'CPF',
                     icon: Icons.credit_card,
                     fieldType: IconTextFormFieldType.cpf,
@@ -102,7 +113,7 @@ class SignUpPage extends StatelessWidget {
                     ),
                     onPressed: _formValidate,
                     child: const Text(
-                      'Entrar',
+                      'Criar Conta',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -118,7 +129,17 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  void _formValidate() {
-    _formKey.currentState?.validate();
+  void _formValidate() async {
+    final authService = AuthService();
+
+    if (_formKey.currentState?.validate() ?? false) {
+      await authService.signUp(
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text,
+        phone: _phoneController.text,
+        cpf: _cpfController.text,
+      );
+    }
   }
 }

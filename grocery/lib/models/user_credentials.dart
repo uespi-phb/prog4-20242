@@ -3,7 +3,7 @@ import 'dart:convert';
 class UserCredentials {
   final String token;
   final String refreshToken;
-  final DateTime expiresIn;
+  final int expiresIn;
 
   UserCredentials({
     required this.token,
@@ -16,7 +16,7 @@ class UserCredentials {
     return UserCredentials(
       token: data['idToken'],
       refreshToken: data['refreshToken'],
-      expiresIn: DateTime.now().add(Duration(seconds: data['expiresIn'])),
+      expiresIn: int.parse(data['expiresIn']),
     );
   }
 }
